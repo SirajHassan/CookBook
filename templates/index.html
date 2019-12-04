@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% from "_formhelpers.html" import render_field %}
+{% block content %}
+    <h1>Word Finder</h1>
+    <form action="/words" method="post">
+        {{ form.hidden_tag() }}
+        {{ render_field(form.avail_letters) }}<br />
+        {{ render_field(form.pattern) }}<br />
+        {{ render_field(form.wordLength) }}<br />
+        <br />
+        {{form.submit()}}
+    </form>
+{% endblock %}
