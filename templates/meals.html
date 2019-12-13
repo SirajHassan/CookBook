@@ -2,8 +2,18 @@
 {% import "bootstrap/wtf.html" as wtf%}
 
 
+This will need a way to display recipe blocks (image and recipe)
+These blocks will need to be taken from the SQL database.
+The last block will need to a contain a wtf form, which will allow the user to put a new recipe in.
+
+
+
 {% block navbar %}
     <nav class="navbar navbar-default">
       {{nav.mynavbar.render()}}
     </nav>
+{% endblock %}
+
+{% block app_content %}
+
 {% endblock %}
