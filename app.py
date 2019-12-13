@@ -1,12 +1,19 @@
 from flask import Flask, request, Response, render_template
 import requests
 import itertools
+from flask_nav import Nav
+from flask_nav.elements import Navbar, View
 from flask_wtf.csrf import CSRFProtect
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, SelectField
-from wtforms.validators import Regexp
+from flask_wtf import Form
+from wtforms import StringField,PasswordField,BooleanField,SubmitField, SelectField
+from wtforms.validators import Regexp, InputRequired,Email,Length, AnyOf
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager,UserMixin,login_user, logout_user, current_user
+from flask_bootstrap import Bootstrap
 import re
 import json
+
 
 
 csrf = CSRFProtect()
@@ -14,6 +21,91 @@ app = Flask(__name__)
 app.config["SECRET_KEY"] = "row the boat"
 csrf.init_app(app)
 
-@app.route('/index')
+# bootstrap stuff
+boostrap = Bootstrap(app)
+nav = Nav()
+
+
+#login stuff
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+#SQL stuff
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://///Users/sirajhassan/Desktop/webDev/CookBook/login.db'
+db = SQLAlchemy(app);
+
+
+#classes
+class User(UserMixin,db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    username = db.Column(db.String(30),unique = True)
+    #6:39
+
+
+class LoginForm(Form):
+    username = StringField('username',validators = [InputRequired()])
+    password = PasswordField('password', validators = [InputRequired()])
+
+
+
+
+#navigation stuff
+@nav.navigation()
+def mynavbar():
+    return Navbar(
+        'Family CookBook',
+        View('Home', 'dashboard'),
+    )
+
+
+
+
+#function that flask login uses to connect abstract user
+#to users in the model
+#returns user object based on user id.
+@login_manager.user_loader
+def load_user(user_id):
+    #get data from table in db
+    #returns entire object for user id number
+    return User.query.get(int(user_id))
+
+#Index page. This will route users to either login or signup.
+@app.route('/')
 def index():
     return render_template("index.html")
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        return 'form submitted'
+    return render_template("dashboard.html", form = form)
+
+@app.route('/signup')
+def signup():
+    return render_template("signup.html")
+
+@app.route('/dashboard')
+def dashboard():
+    return render_template("dashboard.html")
+
+# @app.route('/breakfast')
+# def breakfast():
+#     return render_template("breakfast.html")
+#
+# @app.route('/lunch')
+# def lunch():
+#     return render_template("lunch.html")
+#
+# @app.route('/dessert')
+# def dessert():
+#     return render_template("dessert.html")
+#
+# @app.route('/snacks')
+# def snacks():
+#     return render_template("snack.html")
+
+# if __name__ == '__main__':
+#     app.run(debug=True)
+
+nav.init_app(app)
