@@ -35,11 +35,13 @@ login_manager.init_app(app)
 
 #SQL stuff ########################################
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://///Users/sirajhassan/Desktop/webDev/CookBook/test2.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://///Users/sirajhassan/Desktop/webDev/CookBook/recipe_test.db'
 db = SQLAlchemy(app)
 
 #Tables for db
 class User(UserMixin,db.Model):
+    __tablename__ = 'user'
+
     id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String(30),unique = True)
     password = db.Column(db.String(30))
@@ -47,6 +49,8 @@ class User(UserMixin,db.Model):
     recipes = db.relationship('Recipe',backref='creator')
 
 class Recipe(db.Model):
+    __tablename__ = 'recipe'
+
     id = db.Column(db.Integer, primary_key = True)
     family_id = db.Column(db.Integer, db.ForeignKey('family.id'))
     creator_id = db.Column(db.Integer, db.ForeignKey('user.id'))
@@ -56,35 +60,23 @@ class Recipe(db.Model):
     time_made = db.Column(db.Integer)
 
 class Family(db.Model):
+    __tablename__ = 'family'
+
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(30))
     users = db.relationship('User',backref='family')
     recipes = db.relationship('Recipe',backref='family')
 
 
+def GenerateRecipes(family_id):
+    Recipe.Query.family_id.get(family_id)
 
 
-
-
-
-
-
-
-
-
-
-
-    #6:39
 
 
 class LoginForm(Form):
     username = StringField('username',validators = [InputRequired()])
     password = PasswordField('password', validators = [InputRequired()])
-
-
-
-
-
 
 
 #navigation stuff
@@ -161,3 +153,9 @@ def snacks():
 #add user to the db
 def create_user(name,id,password,family,db):
     print('creating user')
+
+# get all data from recipes and generate to html
+def GenerateRecipes(fam_id):
+    family_recipes = Recipe.query.filter_by(family_id = fam_id)
+
+    return family_recipes
