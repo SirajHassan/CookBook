@@ -35,30 +35,33 @@ login_manager.init_app(app)
 
 #SQL stuff ########################################
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://///Users/sirajhassan/Desktop/webDev/CookBook/test.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://///Users/sirajhassan/Desktop/webDev/CookBook/test2.db'
 db = SQLAlchemy(app)
 
 #Tables for db
 class User(UserMixin,db.Model):
     id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String(30),unique = True)
-    #password = db.Column(db.String(30),unique = True)
-    # family_id = db.Column(db.Integer, db.ForeignKey('family.id'))
-    # recipes = db.relationship('Recipe',backref='creator')
+    password = db.Column(db.String(30))
+    family_id = db.Column(db.Integer, db.ForeignKey('family.id'))
+    recipes = db.relationship('Recipe',backref='creator')
 
-# class Recipe(db.Model):
-#     family_id = db.Column(db.Integer, db.ForeignKey('family.id'))
-#     creator_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-#     name = db.Column(db.String(100),unique = True)
-#     recipe = db.Column(db.String(1000),unique = True)
-#     image_link = db.Column(db.String(200),unique = True)
-#     time_made = db.Column(db.Integer, primary_key = True)
-#
-# class Family(db.Model):
-#     id = db.Column(db.Integer, primary_key = True)
-#     name = db.Column(db.String(30),unique = True)
-#     users = db.relationship('User',backref='family')
-#     recipes = db.relationship('Recipe',backref='family')
+class Recipe(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    family_id = db.Column(db.Integer, db.ForeignKey('family.id'))
+    creator_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    name = db.Column(db.String(100))
+    recipe = db.Column(db.String(1000))
+    image_link = db.Column(db.String(200))
+    time_made = db.Column(db.Integer)
+
+class Family(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    name = db.Column(db.String(30))
+    users = db.relationship('User',backref='family')
+    recipes = db.relationship('Recipe',backref='family')
+
+
 
 
 
