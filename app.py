@@ -23,7 +23,10 @@ csrf.init_app(app)
 
 # bootstrap stuff
 boostrap = Bootstrap(app)
+
+#nav stuff
 nav = Nav()
+nav.init_app(app)
 
 
 #login stuff
@@ -49,12 +52,20 @@ class LoginForm(Form):
 
 
 
+
+
+
 #navigation stuff
 @nav.navigation()
 def mynavbar():
     return Navbar(
         'Family CookBook',
         View('Home', 'dashboard'),
+        View('Breakfast','breakfast'),
+        View('Lunch','lunch'),
+        View('Dinner','dinner'),
+        View('Dessert','dessert'),
+        View('Snacks','snacks'),
     )
 
 
@@ -89,23 +100,32 @@ def signup():
 def dashboard():
     return render_template("dashboard.html")
 
-# @app.route('/breakfast')
-# def breakfast():
-#     return render_template("breakfast.html")
-#
-# @app.route('/lunch')
-# def lunch():
-#     return render_template("lunch.html")
-#
-# @app.route('/dessert')
-# def dessert():
-#     return render_template("dessert.html")
-#
-# @app.route('/snacks')
-# def snacks():
-#     return render_template("snack.html")
+##### meals ######
 
-# if __name__ == '__main__':
-#     app.run(debug=True)
+@app.route('/breakfast')
+def breakfast():
+    return render_template("breakfast.html")
 
-nav.init_app(app)
+@app.route('/lunch')
+def lunch():
+    return render_template("lunch.html")
+
+@app.route('/dinner')
+def dinner():
+    return render_template("dinner.html")
+
+@app.route('/dessert')
+def dessert():
+    return render_template("dessert.html")
+
+@app.route('/snacks')
+def snacks():
+    return render_template("snacks.html")
+
+
+
+################# other functions  ####################
+
+#add user to the db
+def create_user(name,id,password,family,db):
+    print('creating user')
