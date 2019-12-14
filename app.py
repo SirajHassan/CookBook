@@ -34,7 +34,7 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 #SQL stuff ########################################
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://///Users/sirajhassan/Desktop/webDev/CookBook/login.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://///Users/sirajhassan/Desktop/webDev/CookBook/test1.db'
 db = SQLAlchemy(app);
 
 #Tables for db
@@ -49,7 +49,7 @@ class Recipe(db.Model):
     family_id = db.Column(db.Integer, db.ForeignKey('family.id'))
     creator_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     name = db.Column(db.String(100),unique = True)
-    recipe = db.Column(db.String(1000),unique = True)a
+    recipe = db.Column(db.String(1000),unique = True)
     image_link = db.Column(db.String(200),unique = True)
     time_made = db.Column(db.Integer, primary_key = True)
 
@@ -58,6 +58,8 @@ class Family(db.Model):
     name = db.Column(db.String(30),unique = True)
     users = db.relationship('User',backref='family')
     recipes = db.relationship('Recipe',backref='family')
+
+
 
 
 
