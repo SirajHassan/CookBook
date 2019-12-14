@@ -35,6 +35,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://///Users/sirajhassan/Desktop/w
 db = SQLAlchemy(app);
 
 
+
 #classes
 class User(UserMixin,db.Model):
     id = db.Column(db.Integer, primary_key = True)
