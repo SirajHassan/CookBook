@@ -35,7 +35,7 @@ login_manager.init_app(app)
 
 #SQL stuff ########################################
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://///Users/sirajhassan/Desktop/webDev/CookBook/recipe_test.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://///Users/sirajhassan/Desktop/webDev/CookBook/database.db'
 db = SQLAlchemy(app)
 
 #Tables for db
@@ -44,39 +44,31 @@ class User(UserMixin,db.Model):
 
     id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String(30),unique = True)
-    password = db.Column(db.String(30))
     family_id = db.Column(db.Integer, db.ForeignKey('family.id'))
-    recipes = db.relationship('Recipe',backref='creator')
 
 class Recipe(db.Model):
     __tablename__ = 'recipe'
 
     id = db.Column(db.Integer, primary_key = True)
     family_id = db.Column(db.Integer, db.ForeignKey('family.id'))
-    creator_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    creator_id = db.Column(db.Integer)
     name = db.Column(db.String(100))
     recipe = db.Column(db.String(1000))
     image_link = db.Column(db.String(200))
     time_made = db.Column(db.Integer)
 
+#family
 class Family(db.Model):
     __tablename__ = 'family'
 
     id = db.Column(db.Integer, primary_key = True)
+    pin = db.Column(db.Integer)
     name = db.Column(db.String(30))
     users = db.relationship('User',backref='family')
     recipes = db.relationship('Recipe',backref='family')
 
 
-def GenerateRecipes(family_id):
-    Recipe.Query.family_id.get(family_id)
 
-
-
-
-class LoginForm(Form):
-    username = StringField('username',validators = [InputRequired()])
-    password = PasswordField('password', validators = [InputRequired()])
 
 
 #navigation stuff
@@ -94,6 +86,20 @@ def mynavbar():
 
 
 
+#################login stuff ###############################
+
+
+class LoginForm(FlaskForm):
+    username = StringField('Username',validators = [InputRequired(), Length(min = 4, max = 20)])
+    family_pin = PasswordField('Family Pin Number', validators = [InputRequired(), Length(min = 4, max = 4)])
+
+class RegisterForm(FlaskForm):
+    username = StringField('Username',validators = [InputRequired()])
+    #password = PasswordField('Password', validators = [InputRequired()])
+    new_cook_book = BooleanField('New CookBook')
+    family_name = StringField('Family name',validators = [InputRequired(), Length(min = 4, max = 20)])
+    family_pin = PasswordField('Family Pin Number',validators = [InputRequired(), Length(min = 4, max = 4)])
+
 
 #function that flask login uses to connect abstract user
 #to users in the model
@@ -104,21 +110,34 @@ def load_user(user_id):
     #returns entire object for user id number
     return User.query.get(int(user_id))
 
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+
+
+    if form.validate_on_submit(): #if form has been submitted already
+        return 'login is good'
+
+    return render_template("login.html", form = form)
+
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    form = RegisterForm()
+
+    if form.validate_on_submit(): #if form has been submitted already
+        return 'signup is good'
+
+    return render_template("signup.html", form = form)
+
+
+################ pages ######################################
+
 #Index page. This will route users to either login or signup.
 @app.route('/')
 def index():
     return render_template("index.html")
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    form = LoginForm()
-    if form.validate_on_submit():
-        return 'form submitted'
-    return render_template("dashboard.html", form = form)
-
-@app.route('/signup')
-def signup():
-    return render_template("signup.html")
 
 @app.route('/dashboard')
 def dashboard():
@@ -148,6 +167,8 @@ def snacks():
 
 
 
+
+
 ################# other functions  ####################
 
 #add user to the db
@@ -155,7 +176,6 @@ def create_user(name,id,password,family,db):
     print('creating user')
 
 # get all data from recipes and generate to html
-def GenerateRecipes(fam_id):
-    family_recipes = Recipe.query.filter_by(family_id = fam_id)
-
-    return family_recipes
+# def GenerateRecipes(fam_id):
+#     family_recipes = Recipe.query.filter_by(family_id = fam_id)
+#     return family_recipes
