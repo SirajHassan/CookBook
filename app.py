@@ -150,9 +150,41 @@ def signup():
             return('user added')
 
         else:
-            #check if family or pin exists
-            # if family exists, create new user and add them to the family
-            print('finding old cookbook')
+
+            #check if family exists
+            family_exists = db.session.query(Family.name).filter_by(name=form.family_name.data).scalar() is not None
+
+            #check if pin matches family
+            if (family_exists):
+                # check if pin is correct
+                fam = db.session.query(Family.name).filter_by(pin= form.family_pin.data, name = form.family_name.data).all() #better way to do this
+                if fam != []: # pin and name exist as combo
+                    user = User(username = form.username.data)
+                    family = Family.query.filter_by(name=form.family_name.data).first()
+
+                    # add user to family.. if user exists send error..
+                    try:
+                        db.session.add(user)
+                        family.users.append(user)
+                        db.session.add(family)
+                        db.session.commit()
+                        return ('success')
+
+                    except:
+                        flash('Error User Name already exists, try a different name')
+                        return render_template("signup.html", form = form)
+
+                else:
+                    #report pin does not match
+                    flash('Pin does not match')
+                    return render_template("signup.html", form = form)
+
+            else:
+                #report family does not exist.
+                flash('Family Name does not exists')
+                return render_template("signup.html", form = form)
+
+
 
 
 
