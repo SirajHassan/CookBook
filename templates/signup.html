@@ -7,6 +7,20 @@
 
 
 {% block content %}
+
+<!-- check for flash messages in case of invalid input -->
+<center style = 'red'>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li> <font color="red">{{ message }}</font> </li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+</center>
+
 <div class="container">
 
   <form class="form-signin" method = "POST" action = /signup>
@@ -18,7 +32,7 @@
       in to join their cookbook. To create your own new CookBook, please check the box,
       then fill in the remaning fields.
     </h6>
-    {{ wtf.form_field(form.new_cook_book) }}
+    {{ wtf.form_field(form.new_cook_book)}}
     {{ wtf.form_field(form.family_name) }}
     {{ wtf.form_field(form.family_pin) }}
     <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>

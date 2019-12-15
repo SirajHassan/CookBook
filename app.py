@@ -1,4 +1,4 @@
-from flask import Flask, request, Response, render_template
+from flask import Flask, request, Response, render_template, flash
 import requests
 import itertools
 from flask_nav import Nav
@@ -35,7 +35,7 @@ login_manager.init_app(app)
 
 #SQL stuff ########################################
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://///Users/sirajhassan/Desktop/webDev/CookBook/database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://///Users/sirajhassan/Desktop/webDev/CookBook/test_database.db'
 db = SQLAlchemy(app)
 
 #Tables for db
@@ -63,7 +63,7 @@ class Family(db.Model):
 
     id = db.Column(db.Integer, primary_key = True)
     pin = db.Column(db.Integer)
-    name = db.Column(db.String(30))
+    name = db.Column(db.String(40),unique = True)
     users = db.relationship('User',backref='family')
     recipes = db.relationship('Recipe',backref='family')
 
@@ -90,14 +90,14 @@ def mynavbar():
 
 
 class LoginForm(FlaskForm):
-    username = StringField('Username',validators = [InputRequired(), Length(min = 4, max = 20)])
+    username = StringField('Username',validators = [InputRequired(), Length(min = 4, max = 30)])
     family_pin = PasswordField('Family Pin Number', validators = [InputRequired(), Length(min = 4, max = 4)])
 
 class RegisterForm(FlaskForm):
     username = StringField('Username',validators = [InputRequired()])
     #password = PasswordField('Password', validators = [InputRequired()])
     new_cook_book = BooleanField('New CookBook')
-    family_name = StringField('Family name',validators = [InputRequired(), Length(min = 4, max = 20)])
+    family_name = StringField('Family Cook Book Name',validators = [InputRequired(), Length(min = 4, max = 40)])
     family_pin = PasswordField('Family Pin Number',validators = [InputRequired(), Length(min = 4, max = 4)])
 
 
@@ -116,7 +116,7 @@ def login():
     form = LoginForm()
 
 
-    if form.validate_on_submit(): #if form has been submitted already
+    if form.validate_on_submit(): #if form has been submitted properly
         return 'login is good'
 
     return render_template("login.html", form = form)
@@ -125,8 +125,36 @@ def login():
 def signup():
     form = RegisterForm()
 
-    if form.validate_on_submit(): #if form has been submitted already
-        return 'signup is good'
+    if form.validate_on_submit(): #if form has been submitted properly
+
+        if (form.new_cook_book.data == True): # make new cookbook
+
+            user = User(username = form.username.data)
+            family = Family(pin = form.family_pin.data, name = form.family_name.data, users =[user])
+
+            try:
+                db.session.add(family)
+                db.session.commit()
+            except:
+                flash('Error Family CookBook Name exists, try a different name')
+                return render_template("signup.html", form = form)
+
+            try:
+                db.session.add(user)#order of family and user might be issue?
+                db.session.commit()
+            except:
+                flash('Error Username Exists try a different name')
+                return render_template("signup.html", form = form)
+
+
+            return('user added')
+
+        else:
+            #check if family or pin exists
+            # if family exists, create new user and add them to the family
+            print('finding old cookbook')
+
+
 
     return render_template("signup.html", form = form)
 
