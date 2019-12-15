@@ -118,7 +118,7 @@ def load_user(user_id):
 @login_required
 def logout():
     logout_user()
-    return render_template("login.html")
+    return render_template("login.html",form = LoginForm(), methods=['GET', 'POST'])
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -190,7 +190,7 @@ def signup():
                 db.session.add(user)#order of family and user might be issue?
                 db.session.commit()
                 flash('Username: ' + str(form.username.data) + 'created successfully')
-                return render_template("login.html")
+                return render_template("login.html", form = LoginForm() , methods=['GET', 'POST'])
 
 
 
