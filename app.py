@@ -90,8 +90,6 @@ def mynavbar():
 #################login stuff ###############################
 
 
-
-
 class LoginForm(FlaskForm):
     username = StringField('Username',validators = [InputRequired(), Length(min = 4, max = 30)])
     family_pin = PasswordField('Family Pin Number', validators = [InputRequired(), Length(min = 4, max = 4)])
@@ -112,7 +110,6 @@ def load_user(user_id):
     #get data from table in db
     #returns entire object for user id number
     return User.query.get(int(user_id))
-
 
 @app.route('/logout')
 @login_required
@@ -152,10 +149,7 @@ def login():
             flash('Error Username Does not exist try a different name')
             return render_template("login.html", form = form)
 
-
     return render_template("login.html", form = form)
-
-
 
 
 
@@ -191,7 +185,6 @@ def signup():
                 db.session.commit()
                 flash('Username: ' + str(form.username.data) + 'created successfully')
                 return render_template("login.html", form = LoginForm() , methods=['GET', 'POST'])
-
 
 
         else:
