@@ -7,6 +7,20 @@
 
 
 {% block content %}
+
+<!-- check for flash messages in case of invalid input -->
+<center style = 'red'>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li> <font color="red">{{ message }}</font> </li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+</center>
+
 <div class="container">
 
   <form class="form-signin" method = "POST" action = /login>

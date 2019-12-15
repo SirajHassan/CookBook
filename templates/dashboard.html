@@ -2,6 +2,8 @@
 {% import "bootstrap/wtf.html" as wtf%}
 
 
+
+
 {% block navbar %}
     <nav class="navbar navbar-default">
       {{nav.mynavbar.render()}}
@@ -11,5 +13,4 @@
 
 {% block app_content %}
   <h1> Welcome To Your Family's CookBook! </h1>
-  {{GenerateRecipes(1)}}
 {% endblock %}
