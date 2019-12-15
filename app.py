@@ -46,6 +46,7 @@ class User(UserMixin,db.Model):
     username = db.Column(db.String(30),unique = True)
     family_id = db.Column(db.Integer, db.ForeignKey('family.id'))
 
+
 class Recipe(db.Model):
     __tablename__ = 'recipe'
 
@@ -57,7 +58,7 @@ class Recipe(db.Model):
     image_link = db.Column(db.String(200))
     time_made = db.Column(db.Integer)
 
-#family
+#family - groups users into one cookbook
 class Family(db.Model):
     __tablename__ = 'family'
 
@@ -66,8 +67,6 @@ class Family(db.Model):
     name = db.Column(db.String(40),unique = True)
     users = db.relationship('User',backref='family')
     recipes = db.relationship('Recipe',backref='family')
-
-
 
 
 
@@ -127,35 +126,40 @@ def signup():
 
     if form.validate_on_submit(): #if form has been submitted properly
 
-        if (form.new_cook_book.data == True): # make new cookbook
+        #check if user and family exist already..
+        family_exists = db.session.query(Family.name).filter_by(name=form.family_name.data).scalar() is not None
+        user_exists = db.session.query(User.username).filter_by(username=form.username.data).scalar() is not None
 
+        if (form.new_cook_book.data == True): # make new cookbook
             user = User(username = form.username.data)
             family = Family(pin = form.family_pin.data, name = form.family_name.data, users =[user])
 
-            try:
-                db.session.add(family)
-                db.session.commit()
-            except:
+            if (family_exists == True):
                 flash('Error Family CookBook Name exists, try a different name')
+                if (user_exists == True):
+                    flash('Error Username Exists try a different name')
+
                 return render_template("signup.html", form = form)
 
-            try:
-                db.session.add(user)#order of family and user might be issue?
-                db.session.commit()
-            except:
+            if (user_exists == True):
                 flash('Error Username Exists try a different name')
                 return render_template("signup.html", form = form)
 
+            else:
+                db.session.add(family)
+                db.session.add(user)#order of family and user might be issue?
+                db.session.commit()
 
             return('user added')
 
         else:
 
-            #check if family exists
-            family_exists = db.session.query(Family.name).filter_by(name=form.family_name.data).scalar() is not None
+            if (user_exists):
+                flash('Error User Name already exists, try a different name')
+                return render_template("signup.html", form = form)
 
             #check if pin matches family
-            if (family_exists):
+            if(family_exists):
                 # check if pin is correct
                 fam = db.session.query(Family.name).filter_by(pin= form.family_pin.data, name = form.family_name.data).all() #better way to do this
                 if fam != []: # pin and name exist as combo
@@ -163,16 +167,11 @@ def signup():
                     family = Family.query.filter_by(name=form.family_name.data).first()
 
                     # add user to family.. if user exists send error..
-                    try:
-                        db.session.add(user)
-                        family.users.append(user)
-                        db.session.add(family)
-                        db.session.commit()
-                        return ('success')
-
-                    except:
-                        flash('Error User Name already exists, try a different name')
-                        return render_template("signup.html", form = form)
+                    db.session.add(user)
+                    family.users.append(user)
+                    db.session.add(family)
+                    db.session.commit()
+                    return ('success')
 
                 else:
                     #report pin does not match
