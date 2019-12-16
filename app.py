@@ -18,6 +18,12 @@ from datetime import datetime
 
 import re
 import json
+import sys
+import os
+
+from flask_heroku import Heroku
+
+
 
 
 
@@ -26,6 +32,7 @@ app = Flask(__name__)
 app.config["SECRET_KEY"] = "row the boat"
 csrf = CSRFProtect(app) #changed this
 csrf.init_app(app)
+heroku = Heroku(app)
 
 
 # bootstrap stuff
@@ -43,7 +50,8 @@ login_manager.login_view = 'login'
 
 #SQL stuff ########################################
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://///Users/sirajhassan/Desktop/webDev/CookBook/database.db'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://///Users/sirajhassan/Desktop/webDev/CookBook/database.db' #local
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL') #heroku
 db = SQLAlchemy(app)
 
 #Tables for db
@@ -311,3 +319,8 @@ def create(type):
     return render_template("create.html",form = recipe_form)
 
 # pull old recipe from db, edit if creator.
+
+
+if __name__ == ' __main__':
+    #app.debug = True
+    app.run()
