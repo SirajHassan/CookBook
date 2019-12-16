@@ -242,6 +242,7 @@ def signup():
 #Index page. This will route users to either login or signup.
 @app.route('/')
 def index():
+    
     return render_template("index.html")
 
 

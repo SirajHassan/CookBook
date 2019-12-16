@@ -24,11 +24,16 @@
 <div class="container">
 
   <form class="form-signin" method = "POST" action = /login>
+    <center>
     <h2 class="form-signin-heading">Login</h2>
+    </center>
     {{ form.hidden_tag() }}
     {{ wtf.form_field(form.username) }}
     {{ wtf.form_field(form.family_pin) }}
     <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    <button type="button" class="btn btn-link btn-block">
+      <a href="/signup">Sign Up!</a>
+    </button>
   </form>
 
 </div> <!-- /container -->
