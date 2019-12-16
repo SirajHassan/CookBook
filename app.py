@@ -43,7 +43,7 @@ login_manager.login_view = 'login'
 
 #SQL stuff ########################################
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://///Users/sirajhassan/Desktop/webDev/CookBook/test_database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://///Users/sirajhassan/Desktop/webDev/CookBook/database.db'
 db = SQLAlchemy(app)
 
 #Tables for db
