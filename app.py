@@ -2,8 +2,10 @@ from flask import Flask, request, Response, render_template, flash
 import requests
 import itertools
 from flask_nav import Nav
-from flask_nav.elements import Navbar, View
+from flask_nav.elements import *
 from flask_wtf.csrf import CSRFProtect
+from flask_wtf import CsrfProtect
+
 from flask_wtf import FlaskForm
 from flask_wtf import Form
 from wtforms import StringField,PasswordField,BooleanField,SubmitField, SelectField
@@ -16,10 +18,12 @@ import json
 
 
 
-csrf = CSRFProtect()
+
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "row the boat"
+csrf = CSRFProtect(app) #changed this
 csrf.init_app(app)
+
 
 # bootstrap stuff
 boostrap = Bootstrap(app)
@@ -55,7 +59,7 @@ class Recipe(db.Model):
     family_id = db.Column(db.Integer, db.ForeignKey('family.id'))
     creator_id = db.Column(db.Integer)
     name = db.Column(db.String(100))
-    recipe = db.Column(db.String(1000))
+    recipe = db.Column(db.Text) #where summernote data is stored
     image_link = db.Column(db.String(200))
     time_made = db.Column(db.Integer)
 
@@ -75,7 +79,7 @@ class Family(db.Model):
 @nav.navigation()
 def mynavbar():
     return Navbar(
-        'Family CookBook',
+
         View('Home', 'dashboard'),
         View('Breakfast','breakfast'),
         View('Lunch','lunch'),
@@ -83,9 +87,10 @@ def mynavbar():
         View('Dessert','dessert'),
         View('Snacks','snacks'),
         View('Logout','logout'),
+
+
+
     )
-
-
 
 #################login stuff ###############################
 
@@ -236,6 +241,9 @@ def dashboard():
 
 ##### meals ######
 
+#will search database based on logged in user.
+#based on family_id, show recipes that in the family cookbook of the correct type.
+#If the user is the creator, offer the option to edit the recipe.
 @app.route('/breakfast')
 @login_required
 def breakfast():
@@ -260,3 +268,17 @@ def dessert():
 @login_required
 def snacks():
     return render_template("snacks.html")
+
+# create a new recipe, store it in db
+@app.route('/create', methods=['GET', 'POST'])
+@csrf.exempt
+def create():
+    if request.method == 'POST':
+        recipe_data = Recipe(recipe=request.form.get('editordata'))
+        # print(request.form.get('editordata'))
+        
+
+        return 'Posted Data'
+    return render_template("create.html")
+
+# pull old recipe from db, edit if creator.
