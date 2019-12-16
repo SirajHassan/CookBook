@@ -258,8 +258,14 @@ def dashboard():
 @app.route('/breakfast')
 @login_required
 def breakfast():
-    
-    return render_template("breakfast.html")
+
+    family = Family.query.filter_by(id=current_user.family_id).first()
+    family_recipes = Recipe.query.filter_by(family_id = family.id, type = 'breakfast').all() #these can be viewed
+    user_recipes = Recipe.query.filter_by(creator_id = current_user.id , type = 'breakfast').all() #these can be edited
+
+    return(render_template("breakfast.html", family_recipes = family_recipes, size = len(family_recipes), user = current_user))
+
+
 
 @app.route('/lunch')
 @login_required
@@ -297,7 +303,9 @@ def create(type):
         db.session.add(family)
         db.session.commit()
         # print(request.form.get('editordata'))
-        return render_template(str(type)+".html",form = recipe_form) # go back to page of meal type
+        #exec(type+'()') #run type before going to page
+        # return render_template(str(type)+".html",form = recipe_form) # go back to page of meal type
+        return render_template("dashboard.html",form = recipe_form)
 
     return render_template("create.html",form = recipe_form)
 
