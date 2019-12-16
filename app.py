@@ -258,6 +258,7 @@ def dashboard():
 @app.route('/breakfast')
 @login_required
 def breakfast():
+    
     return render_template("breakfast.html")
 
 @app.route('/lunch')
@@ -292,14 +293,10 @@ def create(type):
 
         recipe = Recipe(recipe=request.form.get('editordata'),name =recipe_form.name.data, creator_id = current_user.id,time_made=current_time,type = type)
         family.recipes.append(recipe)
-
         db.session.add(recipe)
         db.session.add(family)
         db.session.commit()
-
         # print(request.form.get('editordata'))
-
-
         return render_template(str(type)+".html",form = recipe_form) # go back to page of meal type
 
     return render_template("create.html",form = recipe_form)
