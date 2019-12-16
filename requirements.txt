@@ -14,4 +14,4 @@ Werkzeug==0.16.0
 WTForms==2.2.1
 Flask-SQLAlchemy==2.4.1
 Flask-Bootstrap==3.3.7.1
-flask-nav-0.6
+Flask-Nav
