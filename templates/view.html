@@ -1,0 +1,17 @@
+{% extends "meals.html" %}
+{% import "bootstrap/wtf.html" as wtf%}
+
+{% block app_content %}
+<!DOCTYPE html>
+<html lang="en">
+<body>
+  <center>
+    <h1> {{name}} <h1>
+    <h4> Made by: {{creator}} <h4>
+
+  {{html|safe}}
+</center>
+</body>
+
+</html>
+{% endblock %}

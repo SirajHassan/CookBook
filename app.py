@@ -13,6 +13,7 @@ from wtforms.validators import Regexp, InputRequired,Email,Length, AnyOf
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager,UserMixin,login_user, logout_user, current_user, login_required
 from flask_bootstrap import Bootstrap
+from flask_table import Table, Col
 
 from datetime import datetime
 
@@ -22,10 +23,6 @@ import sys
 import os
 
 from flask_heroku import Heroku
-
-
-
-
 
 
 app = Flask(__name__)
@@ -230,7 +227,7 @@ def signup():
                     family.users.append(user)
                     db.session.add(family)
                     db.session.commit()
-                    return ('success')
+                    return (render_template("login.html", form = form))
 
                 else:
                     #report pin does not match
@@ -257,7 +254,8 @@ def index():
 @app.route('/dashboard')
 @login_required
 def dashboard():
-    return render_template("dashboard.html", name=current_user.username)
+    family_name = Family.query.filter_by(id=current_user.family_id).first().name
+    return render_template("dashboard.html", name=current_user.username, family_name = family_name )
 
 ##### meals ######
 
@@ -269,32 +267,153 @@ def dashboard():
 def breakfast():
 
     family = Family.query.filter_by(id=current_user.family_id).first()
+    users = User.query.filter_by(family_id=current_user.family_id).all()
     family_recipes = Recipe.query.filter_by(family_id = family.id, type = 'breakfast').all() #these can be viewed
     user_recipes = Recipe.query.filter_by(creator_id = current_user.id , type = 'breakfast').all() #these can be edited
 
-    return(render_template("breakfast.html", family_recipes = family_recipes, size = len(family_recipes), user = current_user))
+    recipe_list = [];
+    creator_list = [];
+    link_list = [];
+    is_creator_list = [];
+    for recipe in family_recipes:
+        creator = User.query.filter_by(id=recipe.creator_id).first().username
+        is_creator = False
+
+        if recipe.creator_id == current_user.id:
+            is_creator = True
+
+        #link to search for food item
+        link = ''
+
+        recipe_list.append((recipe,creator,link,is_creator,current_user.id))
+        # creator_list.append(creator)
+        # link_list.append(link)
+        # is_creator_list.append(is_creator)
+
+
+    return(render_template("breakfast.html", recipe_list= recipe_list ))
 
 
 
 @app.route('/lunch')
 @login_required
 def lunch():
-    return render_template("lunch.html")
+    family = Family.query.filter_by(id=current_user.family_id).first()
+    users = User.query.filter_by(family_id=current_user.family_id).all()
+    family_recipes = Recipe.query.filter_by(family_id = family.id, type = 'lunch').all() #these can be viewed
+    user_recipes = Recipe.query.filter_by(creator_id = current_user.id , type = 'lunch').all() #these can be edited
+
+    recipe_list = [];
+    creator_list = [];
+    link_list = [];
+    is_creator_list = [];
+    for recipe in family_recipes:
+        creator = User.query.filter_by(id=recipe.creator_id).first().username
+        is_creator = False
+
+        if recipe.creator_id == current_user.id:
+            is_creator = True
+
+        #link to search for food item
+        link = ''
+
+        recipe_list.append((recipe,creator,link,is_creator,current_user.id))
+        # creator_list.append(creator)
+        # link_list.append(link)
+        # is_creator_list.append(is_creator)
+
+
+    return(render_template("lunch.html", recipe_list= recipe_list ))
 
 @app.route('/dinner')
 @login_required
 def dinner():
-    return render_template("dinner.html")
+    family = Family.query.filter_by(id=current_user.family_id).first()
+    users = User.query.filter_by(family_id=current_user.family_id).all()
+    family_recipes = Recipe.query.filter_by(family_id = family.id, type = 'dinner').all() #these can be viewed
+    user_recipes = Recipe.query.filter_by(creator_id = current_user.id , type = 'dinner').all() #these can be edited
+
+    recipe_list = [];
+    creator_list = [];
+    link_list = [];
+    is_creator_list = [];
+    for recipe in family_recipes:
+        creator = User.query.filter_by(id=recipe.creator_id).first().username
+        is_creator = False
+
+        if recipe.creator_id == current_user.id:
+            is_creator = True
+
+        #link to search for food item
+        link = ''
+
+        recipe_list.append((recipe,creator,link,is_creator,current_user.id))
+        # creator_list.append(creator)
+        # link_list.append(link)
+        # is_creator_list.append(is_creator)
+
+
+    return(render_template("dinner.html", recipe_list= recipe_list ))
 
 @app.route('/dessert')
 @login_required
 def dessert():
-    return render_template("dessert.html")
+    family = Family.query.filter_by(id=current_user.family_id).first()
+    users = User.query.filter_by(family_id=current_user.family_id).all()
+    family_recipes = Recipe.query.filter_by(family_id = family.id, type = 'dessert').all() #these can be viewed
+    user_recipes = Recipe.query.filter_by(creator_id = current_user.id , type = 'dessert').all() #these can be edited
+
+    recipe_list = [];
+    creator_list = [];
+    link_list = [];
+    is_creator_list = [];
+    for recipe in family_recipes:
+        creator = User.query.filter_by(id=recipe.creator_id).first().username
+        is_creator = False
+
+        if recipe.creator_id == current_user.id:
+            is_creator = True
+
+        #link to search for food item
+        link = ''
+
+        recipe_list.append((recipe,creator,link,is_creator,current_user.id))
+        # creator_list.append(creator)
+        # link_list.append(link)
+        # is_creator_list.append(is_creator)
+
+
+    return(render_template("dessert.html", recipe_list= recipe_list ))
 
 @app.route('/snacks')
 @login_required
 def snacks():
-    return render_template("snacks.html")
+    family = Family.query.filter_by(id=current_user.family_id).first()
+    users = User.query.filter_by(family_id=current_user.family_id).all()
+    family_recipes = Recipe.query.filter_by(family_id = family.id, type = 'snacks').all() #these can be viewed
+    user_recipes = Recipe.query.filter_by(creator_id = current_user.id , type = 'snacks').all() #these can be edited
+
+    recipe_list = [];
+    creator_list = [];
+    link_list = [];
+    is_creator_list = [];
+    for recipe in family_recipes:
+        creator = User.query.filter_by(id=recipe.creator_id).first().username
+        is_creator = False
+
+        if recipe.creator_id == current_user.id:
+            is_creator = True
+
+        #link to search for food item
+        link = ''
+
+        recipe_list.append((recipe,creator,link,is_creator,current_user.id))
+        # creator_list.append(creator)
+        # link_list.append(link)
+        # is_creator_list.append(is_creator)
+
+
+    return(render_template("snacks.html", recipe_list= recipe_list ))
 
 # create a new recipe, store it in db
 @app.route('/create/<type>', methods=['GET', 'POST'])
@@ -319,6 +438,49 @@ def create(type):
     return render_template("create.html",form = recipe_form)
 
 # pull old recipe from db, edit if creator.
+
+@app.route('/edit/<recipe_id>', methods=['GET', 'POST'])
+@csrf.exempt
+def edit(recipe_id):
+    recipe = Recipe.query.filter_by(id=recipe_id).first()
+    name = recipe.name
+    html = recipe.recipe
+
+    recipe_form = RecipeForm()
+    if request.method == 'POST':
+        new_recipe=request.form.get('editordata')
+        new_name =recipe_form.name.data
+        recipe.recipe=new_recipe
+        db.session.add(recipe)
+        db.session.commit()
+
+
+        return render_template("dashboard.html",form = recipe_form)
+
+    return render_template("edit.html",form = recipe_form,name = name,html = html)
+
+
+@app.route('/view/<recipe_id>')
+@login_required
+def view(recipe_id):
+
+    recipe = Recipe.query.filter_by(id=recipe_id).first()
+    name = recipe.name
+    html = recipe.recipe
+    creator = User.query.filter_by(id=recipe.creator_id).first().username
+
+    return render_template("view.html", html = html, name = name, creator = creator)
+
+
+@app.route('/find/recipe_name')
+@login_required
+def view(recipe_name):
+
+
+
+
+
+
 
 
 if __name__ == ' __main__':

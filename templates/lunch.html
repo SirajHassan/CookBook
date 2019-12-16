@@ -1,2 +1,103 @@
 {% extends "meals.html" %}
 {% import "bootstrap/wtf.html" as wtf%}
+
+
+{% block app_content %}
+<!--src: https://stackoverflow.com/questions/11083345/creating-a-dynamic-grid-of-divs-with-javascript -->
+<html>
+<head>
+  <style>
+
+    * {
+      font-family: "Courier New", Courier, monospace;
+    }
+
+    .button {
+      padding: 10px 4px;
+    }
+
+    table.RecipeBox {
+    font-family: "Courier New", Courier, monospace;
+    border: 2px solid #C5C5C5;
+    background-color: #FFEDDB;
+    width: 90%;
+    text-align: center;
+  }
+  table.RecipeBox td, table.RecipeBox th {
+    border: 0px solid #FFF4D3;
+    padding: 10px 4px;
+  }
+  table.RecipeBox tbody td {
+    font-size: 13px;
+    color: #000000;
+  }
+  table.RecipeBox tr:nth-child(even) {
+    background: #DCC4AB;
+  }
+  table.RecipeBox tfoot td {
+    font-size: 16px;
+  }
+    }
+  </style>
+
+</head>
+<body>
+<!-- yo
+for loop through.. create a div. the div should be a 1x3 grid.
+1st in grid is name, who made it, time made.
+2nd in grid is recipe x window link.
+3rd in grid is Button to click. -> x window to map of nearby places serving dish. -->
+
+
+<center>
+
+
+
+
+<table class = "RecipeBox">
+
+  <form action="/create/lunch" class = "button" id = "create_button">
+    <input type="submit" value="Create A New Lunch Recipe" />
+  </form>
+
+  <h1> Lunch Recipes </h1>
+
+<tbody>
+
+{% for recipe in recipe_list %}
+
+<tr>
+ <td class="Name"> {{ recipe[0].name }}  -- made by  {{ recipe[1]}}  </td>
+ <td class="Recipe">
+   <form action="/view/{{ recipe[0].id }}" class = "button" id = "show_button">
+     <input type="submit" value="Click to ShowRecipe" />
+   </form>
+  </td>
+ <td class="Link">
+   <form action="{{link}}" class = "button" id = "link_button">
+     <input type="submit" value="Find the dish nearby" />
+   </form>
+  </td>
+ {% if recipe[0].creator_id == recipe[4] %}
+ <td class="Edit"> <a href="">
+   <!-- add edit and delete button -->
+   <form action="/edit/{{recipe[0].id}}" class = "button" id = "edit_button">
+     <input type="submit" value="Edit your recipe" />
+   </form>
+ </a> </td>
+ {% else %}
+  <td class="Edit"> <a href=""></a></td>
+ {% endif %}
+</tr>
+{% endfor %}
+</tbody>
+
+
+</table>
+</center>
+
+
+</body>
+</html>
+
+{% endblock %}
