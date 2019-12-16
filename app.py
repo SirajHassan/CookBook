@@ -13,6 +13,9 @@ from wtforms.validators import Regexp, InputRequired,Email,Length, AnyOf
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager,UserMixin,login_user, logout_user, current_user, login_required
 from flask_bootstrap import Bootstrap
+
+from datetime import datetime
+
 import re
 import json
 
@@ -60,8 +63,8 @@ class Recipe(db.Model):
     creator_id = db.Column(db.Integer)
     name = db.Column(db.String(100))
     recipe = db.Column(db.Text) #where summernote data is stored
-    image_link = db.Column(db.String(200))
-    time_made = db.Column(db.Integer)
+    #image_link = db.Column(db.String(200))
+    time_made = db.Column(db.String(100))
 
 #family - groups users into one cookbook
 class Family(db.Model):
@@ -91,6 +94,13 @@ def mynavbar():
 
 
     )
+
+
+################# recipe forms ###########################
+
+class RecipeForm(FlaskForm):
+    name = StringField('Name of Recipe', [InputRequired(), Length(min = 1, max = 90)])
+
 
 #################login stuff ###############################
 
@@ -273,12 +283,22 @@ def snacks():
 @app.route('/create', methods=['GET', 'POST'])
 @csrf.exempt
 def create():
+    recipe_form = RecipeForm()
     if request.method == 'POST':
-        recipe_data = Recipe(recipe=request.form.get('editordata'))
-        # print(request.form.get('editordata'))
-        
+        now = datetime.now()
+        current_time = now.strftime("%H:%M:%S")
+        family = Family.query.filter_by(id=current_user.family_id).first()
 
-        return 'Posted Data'
-    return render_template("create.html")
+        recipe = Recipe(recipe=request.form.get('editordata'),name =recipe_form.name.data, creator_id = current_user.id,time_made=current_time)
+        family.recipes.append(recipe)
+
+        db.session.add(recipe)
+        db.session.add(family)
+        db.session.commit()
+
+        # print(request.form.get('editordata'))
+        return 'Recipe made'
+
+    return render_template("create.html",form = recipe_form)
 
 # pull old recipe from db, edit if creator.

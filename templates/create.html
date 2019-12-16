@@ -15,9 +15,11 @@
 <body>
 
   <form method = "post" enctype= "multipart/form-data" >
-
+    {{ form.hidden_tag() }}
+    {{ wtf.form_field(form.name) }}
     <textarea id= "summernote" name = "editordata" ></textarea>
     <input type = "submit" value = "Add Recipe">
+
 
 
   <script>
