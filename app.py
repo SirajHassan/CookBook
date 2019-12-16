@@ -13,7 +13,7 @@ from wtforms.validators import Regexp, InputRequired,Email,Length, AnyOf
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager,UserMixin,login_user, logout_user, current_user, login_required
 from flask_bootstrap import Bootstrap
-from flask_table import Table, Col
+
 
 from datetime import datetime
 
@@ -472,9 +472,12 @@ def view(recipe_id):
     return render_template("view.html", html = html, name = name, creator = creator)
 
 
-@app.route('/find/recipe_name')
-@login_required
-def view(recipe_name):
+# @app.route('/find/recipe_name')
+# @login_required
+#The following will take in the recipe name.
+#There will be a form for the zip code.
+#Then it will list the resturaunts nearby with dishes that are similair.
+# def find(recipe_name):
 
 
 
