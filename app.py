@@ -63,6 +63,7 @@ class Recipe(db.Model):
     creator_id = db.Column(db.Integer)
     name = db.Column(db.String(100))
     recipe = db.Column(db.Text) #where summernote data is stored
+    type = db.Column(db.String(20))
     #image_link = db.Column(db.String(200))
     time_made = db.Column(db.String(100))
 
@@ -280,16 +281,16 @@ def snacks():
     return render_template("snacks.html")
 
 # create a new recipe, store it in db
-@app.route('/create', methods=['GET', 'POST'])
+@app.route('/create/<type>', methods=['GET', 'POST'])
 @csrf.exempt
-def create():
+def create(type):
     recipe_form = RecipeForm()
     if request.method == 'POST':
         now = datetime.now()
         current_time = now.strftime("%H:%M:%S")
         family = Family.query.filter_by(id=current_user.family_id).first()
 
-        recipe = Recipe(recipe=request.form.get('editordata'),name =recipe_form.name.data, creator_id = current_user.id,time_made=current_time)
+        recipe = Recipe(recipe=request.form.get('editordata'),name =recipe_form.name.data, creator_id = current_user.id,time_made=current_time,type = type)
         family.recipes.append(recipe)
 
         db.session.add(recipe)
@@ -297,7 +298,9 @@ def create():
         db.session.commit()
 
         # print(request.form.get('editordata'))
-        return 'Recipe made'
+
+
+        return render_template(str(type)+".html",form = recipe_form) # go back to page of meal type
 
     return render_template("create.html",form = recipe_form)
 
