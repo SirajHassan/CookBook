@@ -51,7 +51,7 @@ login_manager.login_view = 'login'
 #SQL stuff ########################################
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://///Users/sirajhassan/Desktop/webDev/CookBook/database.db' #local
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL') #heroku
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://xxumqtjlsspfpp:fa743653af5ac11c8612be548e86aeb237beaf86a2a9eb9328d0a4fbf202a866@ec2-174-129-254-218.compute-1.amazonaws.com:5432/d9a94ocif6uehf'
 db = SQLAlchemy(app)
 
 #Tables for db
