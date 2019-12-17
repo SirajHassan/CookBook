@@ -22,7 +22,7 @@ Link to Live Application: https://sirajscookbook.herokuapp.com/
  
   
 - Issues:
-  - Summernote Text Editor is not working in Heroku (see notes below).
+  - Summernote Text Editor is not working in Heroku (see pictures below).
 
 Technologies Used:
   - Heroku: Runs the application remotely with PostGres database
