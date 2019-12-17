@@ -16,6 +16,9 @@ Existing usernames and pins:
   pin: 1234
   
   username:
+  
+Issues:
+  Summernote Text Editor is not working in Heroku (see notes below).
 
 Technologies Used:
   - Heroku: Runs the application remotely with PostGres database
