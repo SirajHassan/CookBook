@@ -17,6 +17,30 @@ Technologies Used:
   - Flask-Bootstrap: used to style app
   
   - Project Description:
+  
+      The goal of this web app is to provide a place where a family can remotely store cooking recipes.
+      The app has users, with unique usernames, and each user belongs to a family with a shared cookbook.
+      A new user can either join a existing family if they know the family's pin number, or they can start 
+      a new one. 
+
+      Once logged into the Cookbook, a user can view recipes created by their family in different categories. 
+      (breakfast, lunch, dinner, dessert, snacks) These categories can be accessed from the navigation bar.
+      
+      In each catergory, there is a list of existing recipes. A user can view any recipe made by their family,
+      but they can only modify ones the user has created themselves. The user can also create recipes for 
+      any category. 
+ 
+      Recipes are created with the Summernote text editor. The summer note editor allows users to customize their recipes,
+      and add pictures. NOTE -- This editor does not work on heroku for some reason. I am not sure why, and did not understand 
+      heroku well enough to fix this. Users can still add recipes however, they are not formateed properly. 
+      
+      The feature users can use that involves an API, is located within the list of recipes. The user can click a button to 
+      find resturaunts near them that may serve the dish (based of the name of recipe). This data comes from the Here Places
+      API. 
+      
+      
+    
+    
 
   
   - List of Controllers:
