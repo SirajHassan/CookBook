@@ -1,6 +1,8 @@
 # CookBook
 
-Project Plan: B
+Project Plan:  I attempted Project Plan A, but I only have 2 databases. (3 required)
+               I feel that I met all the other conditions. 
+               So, if that disqualified me from an A, I guess I am going for project B. 
 
 Group Member Names: Siraj Hassan
 
@@ -93,8 +95,6 @@ Technologies Used:
       - similair to /breakfast
     - @app.route('/dessert'):
       - similair to /breakfast
-    - @app.route('/snack'):
-      - similair to /breakfast
     - @app.route('/create/<type>', methods=['GET', 'POST']):
       - This runs the logic behind getting data from user 
         to create a new (type of) recipe and placing it into the database
@@ -113,7 +113,7 @@ Technologies Used:
       - Signup page for users, can direct to login
     - dashboard.html:
       - homepage of cookbook, not much information
-    - breakfast,lunch,dinner,dessert,snack - .html:
+    - breakfast,lunch,dinner,dessert - .html:
       - pages display list of recipes that family members have made.
         Also displays button to let users create new recipe.
       - Each recipe in list has button to view recipe, find resturants,
