@@ -40,7 +40,7 @@ Technologies Used:
   
       The goal of this web app is to provide a place where a family can remotely store cooking recipes.
       The app has users, with unique usernames, and each user belongs to a family with a shared cookbook.
-      A new user can either join a existing family if they know the family's pin number, or they can start 
+      A new user can either join a existing family if they know the family's name or pin number, or they can start 
       a new one. 
 
       Once logged into the Cookbook, a user can view recipes created by their family in different categories. 
