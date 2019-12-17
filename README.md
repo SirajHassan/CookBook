@@ -18,8 +18,8 @@ Link to Live Application: https://sirajscookbook.herokuapp.com/
     - pin: 1234
  
   
-Issues:
-  Summernote Text Editor is not working in Heroku (see notes below).
+- Issues:
+  - Summernote Text Editor is not working in Heroku (see notes below).
 
 Technologies Used:
   - Heroku: Runs the application remotely with PostGres database
