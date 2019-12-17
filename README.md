@@ -55,6 +55,18 @@ Technologies Used:
 
   
   - List of Controllers:
+  
+    - @app.route('/') :
+      - redirect to /login
+    - @login_manager.user_loader : 
+      - returns user object, needed for Flask-login
+    - @app.route('/logout'): 
+      - logs user out, redirected to login page
+    - @app.route('/login', methods=['GET', 'POST']) : 
+      - logs user in if username and pin exist/corrrect. Then redirects to 'dashboard'
+    - @app.route('/signup', methods=['GET', 'POST'])
+      - Let user join family or sign up for with new family
+    
 
   - List of Views: 
 
