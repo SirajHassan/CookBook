@@ -6,16 +6,17 @@ Group Member Names: Siraj Hassan
 
 Link to Live Application: https://sirajscookbook.herokuapp.com/
 
-Existing usernames and pins:
-  username: siraj
-  family: hassan
-  pin: 1234
+- Existing usernames and pins:
+  - 
+    - username: siraj
+    - family: hassan
+    - pin: 1234
   
-  username: Bobby
-  family:hassan
-  pin: 1234
-  
-  username:
+  - 
+    - username: Bobby
+    - family:hassan
+    - pin: 1234
+ 
   
 Issues:
   Summernote Text Editor is not working in Heroku (see notes below).
