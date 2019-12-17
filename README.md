@@ -8,7 +8,14 @@ Link to Live Application: https://sirajscookbook.herokuapp.com/
 
 Existing usernames and pins:
   username: siraj
+  family: hassan
   pin: 1234
+  
+  username: Bobby
+  family:hassan
+  pin: 1234
+  
+  username:
 
 Technologies Used:
   - Heroku: Runs the application remotely with PostGres database
