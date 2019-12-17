@@ -1,6 +1,6 @@
 # CookBook
 
-Project Plan:  I attempted Project Plan A, but I only have 2 "Non User management"
+Project Plan:  I attempted Project Plan A, but I only have 2 "Non User Management"
                databases. (3 required)
                I feel that I met all the other conditions for project A. 
                So, if that disqualified me from an A, I guess I am going for project B. 
