@@ -2,7 +2,7 @@
 
 Project Plan:  I attempted Project Plan A, but I only have 2 "Non User management"
                databases. (3 required)
-               I feel that I met all the other conditions. 
+               I feel that I met all the other conditions for project A. 
                So, if that disqualified me from an A, I guess I am going for project B. 
 
 Group Member Names: Siraj Hassan
