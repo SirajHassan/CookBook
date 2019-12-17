@@ -63,9 +63,9 @@ Technologies Used:
     - @app.route('/logout'): 
       - logs user out, redirected to login page
     - @app.route('/login', methods=['GET', 'POST']) : 
-      - logs user in if username and pin exist/corrrect. Then redirects to 'dashboard'
+      - logs user in if username and pin exist/corrrect. (WTF forms) Then redirects to 'dashboard'
     - @app.route('/signup', methods=['GET', 'POST']):
-      - Runs logic behind inputting new users/familes into database
+      - Runs logic behind inputting new users/familes into database via WTF forms.
     - @app.route('/dashboard'):
       - Route to dashboard or Home page of cookbook
     - @app.route('/breakfast'):
@@ -89,15 +89,33 @@ Technologies Used:
     - @app.route('/list')
       - Lists out resturaunt data
     
-    
-  
-  
-      
-      
-    
-
   - List of Views: 
-
+    - login.html:
+      - Login page for users, can direct to sign up
+    - signup.html:
+      - Signup page for users, can direct to login
+    - dashboard.html:
+      - homepage of cookbook, not much information
+    - breakfast,lunch,dinner,dessert,snack - .html:
+      - pages display list of recipes that family members have made.
+        Also displays button to let users create new recipe.
+      - Each recipe in list has button to view recipe, find resturants,
+        or edit the recipe (if user made it).
+    - meals.html :
+      - all meal catergory templates inherit from this template.
+        Provides nav bar. 
+    - create.html :
+      - renders a text editor for users to create recipes with and submit
+    - edit.html :
+      - renders a text editor for users to edit existing recipes 
+    - view.html :
+      - renders a view of the recipe
+    - find.html : 
+      - asks for zip code, to find resturaunts
+    - list.html:
+      - lists resturaunts that match recipe description
+    
+    
   - Description of Tables and their structure:
  
   - References/Resources:
