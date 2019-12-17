@@ -9,7 +9,7 @@ Group Member Names: Siraj Hassan
 
 Link to Live Application: https://sirajscookbook.herokuapp.com/
 
-- Existing usernames and pins (log in with these to see some premade recipes) and how
+  Existing usernames and pins (log in with these to see some premade recipes) and how
   you can edit your own posts but not other user's:
   - 
     - username: siraj
