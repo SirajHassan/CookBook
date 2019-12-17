@@ -136,7 +136,10 @@ Technologies Used:
     
   - Description of Tables and their structure:
   
-    There are Three tables:
+    There are Three tables. The User table mainly deals with user management. It tracks 
+    users with unique usernames and id's. The Recipe Table stores information on who created
+    which recipes, the recipe names and the recipe data. The Family table has two one to many relationships
+    and helps the users and recipes together. 
     
     
     - User:
