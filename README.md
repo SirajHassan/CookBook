@@ -26,7 +26,6 @@ Technologies Used:
  - Description of Tables and their structure:
  
  - References/Resources:
- 
   - Anthony's videos from PrettyPrinted youtube channel: https://www.youtube.com/channel/UC-QDfvrRIDB6F0bIO4I4HkQ/about
   - Parts of the Miguel Grinberg Flask Tutorial
   
