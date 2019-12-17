@@ -64,8 +64,36 @@ Technologies Used:
       - logs user out, redirected to login page
     - @app.route('/login', methods=['GET', 'POST']) : 
       - logs user in if username and pin exist/corrrect. Then redirects to 'dashboard'
-    - @app.route('/signup', methods=['GET', 'POST'])
-      - Let user join family or sign up for with new family
+    - @app.route('/signup', methods=['GET', 'POST']):
+      - Runs logic behind inputting new users/familes into database
+    - @app.route('/dashboard'):
+      - Route to dashboard or Home page of cookbook
+    - @app.route('/breakfast'):
+      - This will run the logic to exctract breakfast recipe info from database
+    - @app.route('/lunch'):
+      - similair to /breakfast
+    - @app.route('/dinner'):
+      - similair to /breakfast
+    - @app.route('/dessert'):
+      - similair to /breakfast
+    - @app.route('/snack'):
+      - similair to /breakfast
+    - @app.route('/create/<type>', methods=['GET', 'POST']):
+      - This runs the logic behind getting data from user 
+        to create a new (type of) recipe and placing it into the database
+    - @app.route('/view/<recipe_id>'):
+      - Extracts recipe data from database, lets user view it.
+    - @app.route('/find/<recipe>',methods=['GET', 'POST'])
+      - Takes a recipe and calls API to get data about resturants
+        nearby serving dish.
+    - @app.route('/list')
+      - Lists out resturaunt data
+    
+    
+  
+  
+      
+      
     
 
   - List of Views: 
