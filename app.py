@@ -92,6 +92,7 @@ class Family(db.Model):
 
 
 
+
 #navigation stuff
 @nav.navigation()
 def mynavbar():
