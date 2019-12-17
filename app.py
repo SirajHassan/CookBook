@@ -14,6 +14,9 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager,UserMixin,login_user, logout_user, current_user, login_required
 from flask_bootstrap import Bootstrap
 
+from uszipcode import SearchEngine
+
+
 
 from datetime import datetime
 
@@ -47,8 +50,8 @@ login_manager.login_view = 'login'
 
 #SQL stuff ########################################
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://///Users/sirajhassan/Desktop/webDev/CookBook/database.db' #local
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://xxumqtjlsspfpp:fa743653af5ac11c8612be548e86aeb237beaf86a2a9eb9328d0a4fbf202a866@ec2-174-129-254-218.compute-1.amazonaws.com:5432/d9a94ocif6uehf'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://///Users/sirajhassan/Desktop/webDev/CookBook/database.db' #local
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://xxumqtjlsspfpp:fa743653af5ac11c8612be548e86aeb237beaf86a2a9eb9328d0a4fbf202a866@ec2-174-129-254-218.compute-1.amazonaws.com:5432/d9a94ocif6uehf'
 db = SQLAlchemy(app)
 
 #Tables for db
@@ -106,6 +109,9 @@ def mynavbar():
 
 class RecipeForm(FlaskForm):
     name = StringField('Name of Recipe', [InputRequired(), Length(min = 1, max = 90)])
+
+class ZipForm(FlaskForm):
+    zip = StringField('Please Enter your Zip code', validators = [InputRequired(),Length(min=5, max=11)])
 
 
 #################login stuff ###############################
@@ -245,7 +251,7 @@ def signup():
 ################ pages ######################################
 
 #Index page. This will route users to either login or signup.
-@app.route('/')
+@app.route('/index')
 def index():
 
     return render_template("index.html")
@@ -472,12 +478,87 @@ def view(recipe_id):
     return render_template("view.html", html = html, name = name, creator = creator)
 
 
-# @app.route('/find/recipe_name')
+@app.route('/find/<recipe>',methods=['GET', 'POST'])
 # @login_required
-#The following will take in the recipe name.
-#There will be a form for the zip code.
-#Then it will list the resturaunts nearby with dishes that are similair.
-# def find(recipe_name):
+# The following will take in the recipe name.
+# There will be a form for the zip code.
+# Then it will list the resturaunts nearby with dishes that are similair.
+def find(recipe):
+
+    apiKey = 'ylbFVFBsz1DCXmnedrKizaClp3_XgMF1LNMXuGTBVTo'
+
+    form = ZipForm()
+
+    # if zip code submitted
+    if request.method == 'POST':
+
+        resturant_list = []
+
+        zip = request.form.get('zip')
+        search = SearchEngine(simple_zipcode=True)
+        zipcode = search.by_zipcode(str(zip))
+        lat = zipcode.lat
+        lng = zipcode.lng
+
+        cors_api_url = 'https://cors-anywhere.herokuapp.com/'
+        placeUrl = 'https://places.cit.api.here.com/places/v1/autosuggest?at='+ str(lat) + ',' + str(lng) +'&q='
+        placeKey =  'ylbFVFBsz1DCXmnedrKizaClp3_XgMF1LNMXuGTBVTo'
+        placeCode = '&app_code=U69BAgH1-nFOA3RjsxFvqQ'
+        placeID = '&app_id=nIaXQgZgY4aHEActVeSn'
+        placeParameter = str(recipe);
+
+        # url = cors_api_url + placeUrl +placeParameter + placeID + placeCode
+        url = placeUrl +placeParameter + placeID + placeCode
+        #print(url)
+
+        if (str(lat) != 'None') & (str(lng) != 'None'):
+
+            try:
+                response = requests.get(url)
+                # data = response.text
+                # parsed = json.loads(data)
+                r = response.json()
+                size = len(r['results'])
+
+                #make list of resturants nearby..
+                if (size > 1):
+
+                    for rest in r['results']:
+                        try:
+                            location = rest['highlightedVicinity']
+                            name = rest['highlightedTitle']
+                            print(name + location)
+                            resturant_list.append((name,location))
+
+                        except:
+                            print('error line 534')
+
+                    return (render_template("list.html", list = resturant_list))
+
+                flash('No Resturants Nearby With This Dish')
+                return (render_template("find.html" , form = form))
+
+
+            except:
+                flash('Error')
+                return (render_template("find.html" , form = form))
+        else:
+            flash('Invalid Zip Code')
+            return (render_template("find.html" , form = form))
+
+
+
+
+    return (render_template("find.html" , form = form))
+
+
+
+@app.route('/list')
+# @login_required
+#takes list of resturants and displays them
+def list():
+    print('listing')
+    return (render_template("list.html" , list = []))
 
 
 

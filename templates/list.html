@@ -1,6 +1,5 @@
-{% extends "meals.html" %}
 {% import "bootstrap/wtf.html" as wtf%}
-
+{% extends "meals.html" %}
 
 {% block app_content %}
 <html>
@@ -53,41 +52,15 @@ for loop through.. create a div. the div should be a 1x3 grid.
 
 <table class = "RecipeBox">
 
-
-  <form action="/create/dessert" class = "button" id = "create_button">
-    <input type="submit" value="Create a New Dessert Recipe" />
-  </form>
-
-  <h1> Dessert Recipes </h1>
-
-
+  <h1> Resturants That May Have This Dish </h1>
 
 <tbody>
 
-{% for recipe in recipe_list %}
+{% for recipe in list %}
 
 <tr>
- <td class="Name"> {{ recipe[0].name }}  -- made by  {{ recipe[1]}}  </td>
- <td class="Recipe">
-   <form action="/view/{{ recipe[0].id }}" class = "button" id = "show_button">
-     <input type="submit" value="Click to ShowRecipe" />
-   </form>
-  </td>
- <td class="Link">
-   <form action="/find/{{recipe[0].name}}" class = "button" id = "link_button">
-     <input type="submit" value="Find the dish nearby" />
-   </form>
-  </td>
- {% if recipe[0].creator_id == recipe[4] %}
- <td class="Edit"> <a href="">
-   <!-- add edit and delete button -->
-   <form action="/edit/{{recipe[0].id}}" class = "button" id = "edit_button">
-     <input type="submit" value="Edit your recipe" />
-   </form>
- </a> </td>
- {% else %}
-  <td class="Edit"> <a href=""></a></td>
- {% endif %}
+ <td class="Name"> Name: {{recipe[0] | safe}}  </td>
+ <td class="Location"> Location: {{recipe[1]| safe}}</td>
 </tr>
 {% endfor %}
 </tbody>
