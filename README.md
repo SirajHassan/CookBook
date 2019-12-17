@@ -36,11 +36,12 @@ Technologies Used:
       
       Here is an image of what the editor looks like LOCALLY, without Heroku issues:
       
+      Creating the recipe:
       ![alt text](https://github.com/SirajHassan/CookBook/blob/master/images/eggs2.png)
+      Editing the Recipe:
       ![alt text](https://github.com/SirajHassan/CookBook/blob/master/images/eggs1.png)
+      Viewing the Recipe:
       ![alt text](https://github.com/SirajHassan/CookBook/blob/master/images/eggs3.png)
-      
-      
       
       
       
