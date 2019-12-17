@@ -52,7 +52,7 @@ login_manager.login_view = 'login'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://///Users/sirajhassan/Desktop/webDev/CookBook/database.db' #local
 #heroku
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://xxumqtjlsspfpp:fa743653af5ac11c8612be548e86aeb237beaf86a2a9eb9328d0a4fbf202a866@ec2-174-129-254-218.compute-1.amazonaws.com:5432/d9a94ocif6uehf'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://xxumqtjlsspfpp:fa743653af5ac11c8612be548e86aeb237beaf86a2a9eb9328d0a4fbf202a866@ec2-174-129-254-218.compute-1.amazonaws.com:5432/d9a94ocif6uehf'
 db = SQLAlchemy(app)
 
 #Tables for db
@@ -88,6 +88,10 @@ class Family(db.Model):
 
 
 
+
+
+
+
 #navigation stuff
 @nav.navigation()
 def mynavbar():
@@ -109,7 +113,7 @@ def mynavbar():
 ################# recipe forms ###########################
 
 class RecipeForm(FlaskForm):
-    name = StringField('Name of Recipe', [InputRequired(), Length(min = 1, max = 90)])
+    name = StringField('Please Enter Name of Recipe', [InputRequired(), Length(min = 1, max = 90)])
 
 class ZipForm(FlaskForm):
     zip = StringField('Please Enter your Zip code', validators = [InputRequired(),Length(min=5, max=11)])
@@ -252,10 +256,10 @@ def signup():
 ################ pages ######################################
 
 #Index page. This will route users to either login or signup.
-@app.route('/index')
+@app.route('/')
 def index():
-
-    return render_template("index.html")
+    form = LoginForm()
+    return render_template("login.html", form = form)
 
 
 @app.route('/dashboard')

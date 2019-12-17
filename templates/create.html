@@ -15,17 +15,19 @@
   <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
 </head>
 <body>
-  <center>
+
 
   <form method = "post" enctype= "multipart/form-data" >
     {{ form.hidden_tag() }}
+    <center>
     {{ wtf.form_field(form.name) }}
+    </center>
     <textarea id= "summernote" name = "editordata" ></textarea>
     <center>
     <input type = "submit" value = "Add Recipe">
     </center>
 
-  </center>
+
 
 
   <script>
