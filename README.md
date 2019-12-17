@@ -1,11 +1,11 @@
 # CookBook
 
-Project Plan:  I attempted Project Plan A, but I only have 2 "Non User Management"
+**Project Plan**:  I attempted Project Plan A, but I only have 2 "Non User Management"
                databases. (3 required)
                I feel that I met all the other conditions for project A. 
                So, if that disqualifies me from an A, I guess I am going for project B. 
 
-Group Member Names: Siraj Hassan
+**Group Member Names**: Siraj Hassan
 
 Link to Live Application: https://sirajscookbook.herokuapp.com/
 
@@ -22,10 +22,10 @@ Link to Live Application: https://sirajscookbook.herokuapp.com/
     - pin: 1234
  
   
-- Issues:
+- **Issues**:
   - Summernote Text Editor is not working in Heroku (see pictures below).
 
-Technologies Used:
+**Technologies Used**:
   - Heroku: Runs the application remotely with PostGres database
   - Here Places API: (https://places.demo.api.here.com/places/)
     - Used for feature to find resturaunts nearby that may serve a certain dish
@@ -52,7 +52,7 @@ Technologies Used:
       any category. 
  
       Recipes are created with the Summernote text editor. The summer note editor allows users to customize their recipes,
-      and add pictures. NOTE -- This editor does not work on heroku for some reason. I am not sure why, and did not understand 
+      and add pictures. **NOTE** -- This editor does not work on heroku for some reason. I am not sure why, and did not understand 
       heroku well enough to fix this. Users can still add recipes however, they are not formatted properly. 
       
       Here is an image of what the editor looks like LOCALLY, without Heroku issues:
@@ -75,7 +75,7 @@ Technologies Used:
     
 
   
-  - List of Controllers:
+  - **List of Controllers**:
   
     - @app.route('/') :
       - redirect to /login
@@ -108,7 +108,7 @@ Technologies Used:
     - @app.route('/list')
       - Lists out resturaunt data
     
-  - List of Views: 
+  - **List of Views**: 
     - login.html:
       - Login page for users, can direct to sign up
     - signup.html:
@@ -135,7 +135,7 @@ Technologies Used:
       - lists resturaunts that match recipe description
     
     
-  - Description of Tables and their structure:
+  - **Description of Tables and their structure**:
   
     There are Three tables. The User table mainly deals with user management. It tracks 
     users with unique usernames and id's. The Recipe Table stores information on who created
@@ -169,7 +169,7 @@ Technologies Used:
       - recipes: one to many relationship.. list of recipes
       
  
-  - References/Resources:
+  - **References/Resources**:
     - Anthony's videos from PrettyPrinted youtube channel: https://www.youtube.com/channel/UC-QDfvrRIDB6F0bIO4I4HkQ/about
     - Parts of the Miguel Grinberg Flask Tutorial
   
