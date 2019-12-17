@@ -32,7 +32,15 @@ Technologies Used:
  
       Recipes are created with the Summernote text editor. The summer note editor allows users to customize their recipes,
       and add pictures. NOTE -- This editor does not work on heroku for some reason. I am not sure why, and did not understand 
-      heroku well enough to fix this. Users can still add recipes however, they are not formateed properly. 
+      heroku well enough to fix this. Users can still add recipes however, they are not formatted properly. 
+      
+      Here is an image of what the editor should look like and what the view of the recipe looks like locally:
+      
+      ![alt text](https://github.com/SirajHassan/CookBook/blob/master/images/eggs1.png)
+      
+      
+      
+      
       
       The feature users can use that involves an API, is located within the list of recipes. The user can click a button to 
       find resturaunts near them that may serve the dish (based of the name of recipe). This data comes from the Here Places
