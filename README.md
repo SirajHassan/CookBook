@@ -6,6 +6,10 @@ Group Member Names: Siraj Hassan
 
 Link to Live Application: https://sirajscookbook.herokuapp.com/
 
+Existing usernames and pins:
+  username: siraj
+  pin: 1234
+
 Technologies Used:
   - Heroku: Runs the application remotely with PostGres database
   - Here Places API: (https://places.demo.api.here.com/places/)
