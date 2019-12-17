@@ -20,6 +20,8 @@ Technologies Used:
       
   - Flask-Bootstrap: used to style app
   
+  - Flask-Login: used for user session management.
+  
   - Project Description:
   
       The goal of this web app is to provide a place where a family can remotely store cooking recipes.
