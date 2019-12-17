@@ -34,9 +34,11 @@ Technologies Used:
       and add pictures. NOTE -- This editor does not work on heroku for some reason. I am not sure why, and did not understand 
       heroku well enough to fix this. Users can still add recipes however, they are not formatted properly. 
       
-      Here is an image of what the editor should look like and what the view of the recipe looks like locally:
+      Here is an image of what the editor looks like LOCALLY, without Heroku issues:
       
+      ![alt text](https://github.com/SirajHassan/CookBook/blob/master/images/eggs2.png)
       ![alt text](https://github.com/SirajHassan/CookBook/blob/master/images/eggs1.png)
+      ![alt text](https://github.com/SirajHassan/CookBook/blob/master/images/eggs3.png)
       
       
       
