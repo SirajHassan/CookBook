@@ -1,4 +1,4 @@
-from flask import Flask, request, Response, render_template, flash
+from flask import Flask, request, Response, render_template, flash,redirect
 import requests
 import itertools
 from flask_nav import Nav
@@ -445,7 +445,9 @@ def create(type):
         # print(request.form.get('editordata'))
         #exec(type+'()') #run type before going to page
         # return render_template(str(type)+".html",form = recipe_form) # go back to page of meal type
-        return render_template("dashboard.html",form = recipe_form)
+
+        route = "/" + str(type) + ""
+        return redirect(route)
 
     return render_template("create.html",form = recipe_form)
 
