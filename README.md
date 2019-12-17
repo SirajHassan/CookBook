@@ -117,6 +117,35 @@ Technologies Used:
     
     
   - Description of Tables and their structure:
+  
+    There are Three tables:
+    
+    
+    - User:
+      In the user table, Users belong to families, and have unique usernames.
+    
+      - id: user id
+      - username: displayed name of user
+      - family_id: relation to family table, id number of family 
+      
+    - Recipes:
+      In the recipe table, each recipe belongs to family and have unique creators (users).
+      - id: recipe id
+      - family_id: relation to family table, id number of family
+      - creator_id: id of user who created recipe
+      - name: name of recipe
+      - type: category of meal
+      - time_made: time recipe was made (not used)
+      
+    - Family: 
+      In the family table, families have unique names, a pin (short password) and
+      have a one to many relationship with the recipe and user tables rows. 
+      - id: family id
+      - pin: 4 digit family pin number
+      - name: displayed family name
+      - users: one to many relationship.. list of users
+      - recipes: one to many relationship.. list of recipes
+      
  
   - References/Resources:
     - Anthony's videos from PrettyPrinted youtube channel: https://www.youtube.com/channel/UC-QDfvrRIDB6F0bIO4I4HkQ/about
