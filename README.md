@@ -5,8 +5,6 @@
                I feel that I met all the other conditions for project A. 
                So, if that disqualifies me from an A, I guess I am going for project B. 
 
-**Group Member Names**: Siraj Hassan
-
 Link to Live Application: https://sirajscookbook.herokuapp.com/
 
   Existing usernames and pins (log in with these to see some premade recipes) and how
