@@ -1,24 +1,7 @@
 # CookBook
 
-**Project Plan**:  I attempted Project Plan A, but I only have 2 "Non User Management"
-               databases. (3 required)
-               I feel that I met all the other conditions for project A. 
-               So, if that disqualifies me from an A, I guess I am going for project B. 
-
 Link to Live Application: https://sirajscookbook.herokuapp.com/
 
-  Existing usernames and pins (log in with these to see some premade recipes) and how
-  you can edit your own posts but not other user's:
-  - 
-    - username: siraj
-    - family: hassan
-    - pin: 1234
-  
-  - 
-    - username: Bobby
-    - family:hassan
-    - pin: 1234
- 
   
 - **Issues**:
   - Summernote Text Editor is not working in Heroku (see pictures below).
@@ -50,19 +33,8 @@ Link to Live Application: https://sirajscookbook.herokuapp.com/
       any category. 
  
       Recipes are created with the Summernote text editor. The summer note editor allows users to customize their recipes,
-      and add pictures. **NOTE** -- This editor does not work on heroku for some reason. I am not sure why, and did not understand 
-      heroku well enough to fix this. Users can still add recipes however, they are not formatted properly. 
-      
-      Here is an image of what the editor looks like LOCALLY, without Heroku issues:
-      
-      Creating the recipe:
-      ![alt text](https://github.com/SirajHassan/CookBook/blob/master/images/eggs2.png)
-      Editing the Recipe:
-      ![alt text](https://github.com/SirajHassan/CookBook/blob/master/images/eggs1.png)
-      Viewing the Recipe:
-      ![alt text](https://github.com/SirajHassan/CookBook/blob/master/images/eggs3.png)
-      
-      
+      and add pictures.
+    
       
       The feature users can use that involves an API, is located within the list of recipes. The user can click a button to 
       find resturaunts near them that may serve the dish (based of the name of recipe). This data comes from the Here Places
